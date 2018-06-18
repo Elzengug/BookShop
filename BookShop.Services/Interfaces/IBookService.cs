@@ -7,7 +7,9 @@ namespace BookShop.Services.Interfaces
     public interface IBookService
     {
         Task<ICollection<Book>> GetAllBooksAsync();
-        Task<ICollection<Book>> GetBookByIdAsync();
-        Task<ICollection<Book>> RemoveBookAsync();
+        Task<Book> GetBookByIdAsync(int id);
+        Task<bool> RemoveBookAsync(int id);
+        Task<Book> CreateBookAsync(Book book);
+        Task<Book> EditBookAsync(Book book);
     }
 }

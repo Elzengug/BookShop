@@ -59,6 +59,18 @@
     <Compile Include="Migrations\201806161906150_Init.Designer.cs">
       <DependentUpon>201806161906150_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806170745004_edit date.cs" />
+    <Compile Include="Migrations\201806170745004_edit date.Designer.cs">
+      <DependentUpon>201806170745004_edit date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806171138377_role.cs" />
+    <Compile Include="Migrations\201806171138377_role.Designer.cs">
+      <DependentUpon>201806171138377_role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806171148598_role1.cs" />
+    <Compile Include="Migrations\201806171148598_role1.Designer.cs">
+      <DependentUpon>201806171148598_role1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Implementations\BasketRepository.cs" />
@@ -83,6 +95,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201806161906150_Init.resx">
       <DependentUpon>201806161906150_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806170745004_edit date.resx">
+      <DependentUpon>201806170745004_edit date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806171138377_role.resx">
+      <DependentUpon>201806171138377_role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806171148598_role1.resx">
+      <DependentUpon>201806171148598_role1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

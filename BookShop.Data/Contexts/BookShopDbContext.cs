@@ -18,9 +18,10 @@ namespace BookShop.Data.Contexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
-            modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id).ToTable("Roles");
+            modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserRole>();
+            modelBuilder.Entity<IdentityUser>().HasMany(p => p.Roles).WithOne().HasForeignKey(p => p.UserId).HasPrincipalKey(p => p.Id);
         }
 
         public static BookShopDbContext Create()

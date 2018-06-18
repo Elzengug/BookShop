@@ -53,6 +53,10 @@
       <Project>{AD3627AB-B4CB-4946-A484-3FFFBC73AE5E}</Project>
       <Name>BookShop.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BookShop.Data\BookShop.Data.csproj">
+      <Project>{0CF2FFE8-8E5F-4478-A4CF-F65A1AF9DBCF}</Project>
+      <Name>BookShop.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

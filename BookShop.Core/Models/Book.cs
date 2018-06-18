@@ -13,7 +13,8 @@ namespace BookShop.Core.Models
         public int Count { get; set; }
         public string Author { get; set; }
         public double Price { get; set; }
-        public DateTime PublicationDate { get; set; }
+        public string PublicationDate { get; set; }
+        public byte[] Image { get; set; }
 
         public ICollection<BookOrder> BookOrders { get; set; }
     }
