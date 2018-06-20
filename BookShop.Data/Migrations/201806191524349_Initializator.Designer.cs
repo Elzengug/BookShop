@@ -7,13 +7,13 @@ namespace BookShop.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class editdate : IMigrationMetadata
+    public sealed partial class Initializator : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(editdate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initializator));
         
         string IMigrationMetadata.Id
         {
-            get { return "201806170745004_edit date"; }
+            get { return "201806191524349_Initializator"; }
         }
         
         string IMigrationMetadata.Source

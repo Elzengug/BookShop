@@ -1,5 +1,4 @@
 ﻿@using BookShop.Core.Models
-
 @model ICollection<Book>
 
 @{
@@ -7,10 +6,18 @@
 }
 
 <h2>Index</h2>
-@foreach (var book in Model)
-{
-    <h3>@book.Name</h3>
-    <p>@book.Author</p>
-    <p>@book.Count</p>
-}
-
+    @foreach (var book in Model)
+    {
+        <h2>@book.Name</h2><br>
+        <p> @book.Author</p><br>
+        <p> @book.Count</p><br>
+        <p> @book.Price</p><br>
+        <form method="post" action="~/Book/AddBookToBasket">
+            <p>
+            Количество </p>
+                <input type="text" name ="Count"size="40">
+                <input type="hidden" id="bookId" name="bookId" value="@book.Id">
+                <input type="submit" value="Добавить в корзину" class="submit" /><br>
+                
+        </form>
+ }

@@ -6,6 +6,8 @@ namespace BookShop.Services.Interfaces
 {
     public interface IBasketService
     {
-        Task<double> GetTotalCostAsync();
+        Task<double> GetTotalCostAsync(string id);
+        void Clear();
+
     }
 }

@@ -12,7 +12,7 @@ namespace BookShop.Core.Models
     {
         public int BookId { get; set; }
         public int Count { get; set; }
-        public int BasketId { get; set; }
+        public string BasketId { get; set; }
 
         public  Basket Basket { get; set; }
         public Book Book { get; set; }

@@ -53,8 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Authorization\Role.cs" />
-    <Compile Include="Models\Authorization\UserRole.cs" />
     <Compile Include="Models\Base\BaseEntity.cs" />
     <Compile Include="Models\Basket.cs" />
     <Compile Include="Models\Book.cs" />

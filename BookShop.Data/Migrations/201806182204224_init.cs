@@ -3,7 +3,7 @@ namespace BookShop.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Init : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -42,7 +42,8 @@ namespace BookShop.Data.Migrations
                         Count = c.Int(nullable: false),
                         Author = c.String(),
                         Price = c.Double(nullable: false),
-                        PublicationDate = c.DateTime(nullable: false),
+                        PublicationDate = c.String(),
+                        Image = c.Binary(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -92,33 +93,25 @@ namespace BookShop.Data.Migrations
                 .Index(t => t.User_Id);
             
             CreateTable(
-                "dbo.UserRoles",
+                "dbo.IdentityUserRoles",
                 c => new
                     {
                         RoleId = c.String(nullable: false, maxLength: 128),
                         UserId = c.String(nullable: false, maxLength: 128),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
-                        Role_Id = c.String(maxLength: 128),
-                        User_Id = c.String(maxLength: 128),
                         IdentityRole_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.RoleId, t.UserId })
-                .ForeignKey("dbo.Roles", t => t.Role_Id)
-                .ForeignKey("dbo.Users", t => t.User_Id)
                 .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.Roles", t => t.IdentityRole_Id)
+                .ForeignKey("dbo.IdentityRoles", t => t.IdentityRole_Id)
                 .Index(t => t.UserId)
-                .Index(t => t.Role_Id)
-                .Index(t => t.User_Id)
                 .Index(t => t.IdentityRole_Id);
             
             CreateTable(
-                "dbo.Roles",
+                "dbo.IdentityRoles",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -126,26 +119,22 @@ namespace BookShop.Data.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.UserRoles", "IdentityRole_Id", "dbo.Roles");
+            DropForeignKey("dbo.IdentityUserRoles", "IdentityRole_Id", "dbo.IdentityRoles");
             DropForeignKey("dbo.Baskets", "Id", "dbo.Users");
-            DropForeignKey("dbo.UserRoles", "UserId", "dbo.Users");
-            DropForeignKey("dbo.UserRoles", "User_Id", "dbo.Users");
-            DropForeignKey("dbo.UserRoles", "Role_Id", "dbo.Roles");
+            DropForeignKey("dbo.IdentityUserRoles", "UserId", "dbo.Users");
             DropForeignKey("dbo.IdentityUserLogins", "User_Id", "dbo.Users");
             DropForeignKey("dbo.IdentityUserClaims", "UserId", "dbo.Users");
             DropForeignKey("dbo.BookOrders", "BookId", "dbo.Books");
             DropForeignKey("dbo.BookOrders", "Basket_Id", "dbo.Baskets");
-            DropIndex("dbo.UserRoles", new[] { "IdentityRole_Id" });
-            DropIndex("dbo.UserRoles", new[] { "User_Id" });
-            DropIndex("dbo.UserRoles", new[] { "Role_Id" });
-            DropIndex("dbo.UserRoles", new[] { "UserId" });
+            DropIndex("dbo.IdentityUserRoles", new[] { "IdentityRole_Id" });
+            DropIndex("dbo.IdentityUserRoles", new[] { "UserId" });
             DropIndex("dbo.IdentityUserLogins", new[] { "User_Id" });
             DropIndex("dbo.IdentityUserClaims", new[] { "UserId" });
             DropIndex("dbo.BookOrders", new[] { "Basket_Id" });
             DropIndex("dbo.BookOrders", new[] { "BookId" });
             DropIndex("dbo.Baskets", new[] { "Id" });
-            DropTable("dbo.Roles");
-            DropTable("dbo.UserRoles");
+            DropTable("dbo.IdentityRoles");
+            DropTable("dbo.IdentityUserRoles");
             DropTable("dbo.IdentityUserLogins");
             DropTable("dbo.IdentityUserClaims");
             DropTable("dbo.Users");

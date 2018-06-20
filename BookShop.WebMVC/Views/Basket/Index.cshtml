@@ -1,0 +1,16 @@
+﻿@using BookShop.Core.Models
+@model ICollection<BookOrder>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Basket</h2>
+@foreach (var bookOrder in Model)
+{
+    <h2>@bookOrder.Book.Author</h2><br>
+    <p> @bookOrder.Book.Price</p><br>
+    
+}
+
+

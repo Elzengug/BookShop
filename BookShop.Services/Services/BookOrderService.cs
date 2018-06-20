@@ -1,9 +1,29 @@
-﻿using BookShop.Services.Interfaces;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using BookShop.Core.Models;
+using BookShop.Data.Repositories.Interfaces;
+using BookShop.Services.Interfaces;
 
 namespace BookShop.Services.Services
 {
     public class BookOrderService : IBookOrderService
     {
-        
+        private readonly IBookOrderRepository _bookOrderRepository;
+
+        public BookOrderService(IBookOrderRepository bookOrderRepository)
+        {
+            _bookOrderRepository = bookOrderRepository;
+        }
+        public async Task<BookOrder> AddBookOrder(BookOrder bookOrder)
+        {
+            var addedBookOrder = await _bookOrderRepository.AddAsync(bookOrder);
+            return addedBookOrder;
+        }
+
+        public async Task<ICollection<BookOrder>> GetBookOrdersByBasketId(string basketId)
+        {
+            ICollection<BookOrder> bookOrder = await _bookOrderRepository.FindAllAsync(x => x.BasketId == basketId);
+            return bookOrder;
+        }
     }
 }
