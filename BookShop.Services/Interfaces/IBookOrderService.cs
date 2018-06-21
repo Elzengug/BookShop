@@ -8,5 +8,6 @@ namespace BookShop.Services.Interfaces
     {
         Task<BookOrder> AddBookOrder(BookOrder bookOrder);
         Task<ICollection<BookOrder>> GetBookOrdersByBasketId(string basketId);
+        Task<bool> RemoveBookOrder(int id);
     }
 }

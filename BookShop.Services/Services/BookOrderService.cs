@@ -25,5 +25,11 @@ namespace BookShop.Services.Services
             ICollection<BookOrder> bookOrder = await _bookOrderRepository.FindAllAsync(x => x.BasketId == basketId);
             return bookOrder;
         }
+
+        public async Task<bool> RemoveBookOrder(int id)
+        {
+            var bookOrder = await _bookOrderRepository.FindFirstAsync(x => x.Id == id);
+            return await _bookOrderRepository.RemoveAsync(bookOrder);
+        }
     }
 }

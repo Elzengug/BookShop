@@ -1,16 +1,41 @@
 ﻿@using BookShop.Core.Models
-@model ICollection<BookOrder>
+@using BookShop.WebMVC.ViewModels
+@model BookShop.WebMVC.ViewModels.BasketVIewModel
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Basket</h2>
-@foreach (var bookOrder in Model)
+<h2>Корзина</h2>
+@foreach (var bookOrder in Model.BookOrders)
+{<table class="table table-hover">
+        <tr>
+            <th scope="col">Автор</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+        </tr>
+        <tr class="table-primary">
+            <th>@bookOrder.Book.Author</th>
+            <td>@bookOrder.Book.Price</td>
+            <td>@bookOrder.Book.Count</td>
+            <td>
+                <form method="post" action="~/Basket/DeleteBookOrder">
+                    <input type="hidden" id="bookOrderId" name="bookOrderId" value="@bookOrder.Id">
+                    <input type="submit" class="btn btn-secondary" value="Удалить" class="submit" /><br>
+                </form>
+            </td>
+        </tr>
+    </table>
+}
+<p><strong>Общая стоимость покупки :</strong>@Model.TotalCost</p>
+@if (Model.BookOrders.Count > 0)
 {
-    <h2>@bookOrder.Book.Author</h2><br>
-    <p> @bookOrder.Book.Price</p><br>
-    
+    <form method="post" action="~/Basket/ConfirmOrder">
+        <input type="submit" class="btn btn-secondary" value="Оформить заказ" class="submit" />
+    </form>
+    <form method="post" style="margin-top: 5%" action="~/Basket/Clear">
+        <input type="submit" class="btn btn-secondary" value="Очистить корзину" class="submit" />
+    </form>
 }
 
 

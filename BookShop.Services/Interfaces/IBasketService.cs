@@ -7,7 +7,7 @@ namespace BookShop.Services.Interfaces
     public interface IBasketService
     {
         Task<double> GetTotalCostAsync(string id);
-        void Clear();
-
+        Task<bool> Clear(string id);
+        Task<bool> ConfirmOrder(string id);
     }
 }

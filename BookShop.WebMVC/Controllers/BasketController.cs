@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using BookShop.Core.Models;
 using BookShop.Data.Contexts;
 using BookShop.Services.Interfaces;
+using BookShop.WebMVC.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace BookShop.WebMVC.Controllers
@@ -27,9 +28,47 @@ namespace BookShop.WebMVC.Controllers
 
         public async Task<ActionResult> Index()
         {
+            BasketVIewModel basketVIewModel = new BasketVIewModel();
             string id = User.Identity.GetUserId();
-            var bookOrders = await _bookOrderService.GetBookOrdersByBasketId(id);
-            return View(bookOrders);
+            basketVIewModel.BookOrders = await _bookOrderService.GetBookOrdersByBasketId(id);
+            basketVIewModel.TotalCost = await _basketService.GetTotalCostAsync(id);
+            return View(basketVIewModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Clear()
+        {         
+            string id = User.Identity.GetUserId();
+            bool isDeleted = await _basketService.Clear(id);
+            if (!isDeleted)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ConfirmOrder()
+        {
+            string id = User.Identity.GetUserId();
+            bool isConfirm = await _basketService.ConfirmOrder(id);
+            bool clear = await _basketService.Clear(id);
+            if (!isConfirm || !clear)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteBookOrder(int bookOrderId)
+        {
+            bool isDeleted = await _bookOrderService.RemoveBookOrder(bookOrderId);
+            if (!isDeleted)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("Index");
         }
     }
 }
