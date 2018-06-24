@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BookShop.Core.Enums;
 using BookShop.Core.Models;
 using BookShop.Data.Repositories.Interfaces;
 using BookShop.Services.Interfaces;
@@ -20,9 +21,10 @@ namespace BookShop.Services.Services
             return addedBookOrder;
         }
 
-        public async Task<ICollection<BookOrder>> GetBookOrdersByBasketId(string basketId)
+        public async Task<ICollection<BookOrder>> GetActiveBookOrdersByBasketId(string basketId)
         {
-            ICollection<BookOrder> bookOrder = await _bookOrderRepository.FindAllAsync(x => x.BasketId == basketId);
+            ICollection<BookOrder> bookOrder = await _bookOrderRepository
+                .FindAllAsync(x => x.BasketId == basketId && x.Status == BookOrderStatus.Active);
             return bookOrder;
         }
 

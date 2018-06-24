@@ -18,7 +18,6 @@ namespace BookShop.Core.Models.Authorization
             return userIdentity;
         }
 
-       // public ICollection<UserRole> UserRoles { get; set; }
         public Basket Basket { get; set; }
     }
 }

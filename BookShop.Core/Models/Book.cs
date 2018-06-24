@@ -14,7 +14,6 @@ namespace BookShop.Core.Models
         public string Author { get; set; }
         public double Price { get; set; }
         public string PublicationDate { get; set; }
-        public byte[] Image { get; set; }
 
         public ICollection<BookOrder> BookOrders { get; set; }
     }

@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using BookShop.Core.Models;
-using BookShop.Data.Contexts;
 using BookShop.Services.Interfaces;
 using BookShop.WebMVC.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace BookShop.WebMVC.Controllers
 {
+    [Authorize]
     public class BasketController : Controller
     {
         private readonly IBookOrderService _bookOrderService;
@@ -26,38 +19,59 @@ namespace BookShop.WebMVC.Controllers
             _basketService = basketService;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string message)
         {
+            if (message != null)
+            {
+                ViewBag.StatusMessage = message;
+            }
+
             BasketVIewModel basketVIewModel = new BasketVIewModel();
             string id = User.Identity.GetUserId();
-            basketVIewModel.BookOrders = await _bookOrderService.GetBookOrdersByBasketId(id);
+            basketVIewModel.BookOrders = await _bookOrderService.GetActiveBookOrdersByBasketId(id);
             basketVIewModel.TotalCost = await _basketService.GetTotalCostAsync(id);
             return View(basketVIewModel);
         }
 
         [HttpPost]
         public async Task<ActionResult> Clear()
-        {         
-            string id = User.Identity.GetUserId();
-            bool isDeleted = await _basketService.Clear(id);
-            if (!isDeleted)
+        {
+            try
+            {
+                string id = User.Identity.GetUserId();
+                bool isDeleted = await _basketService.Clear(id);
+                if (!isDeleted)
+                {
+                    return HttpNotFound();
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch(Exception)
             {
                 return HttpNotFound();
             }
-            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<ActionResult> ConfirmOrder()
         {
-            string id = User.Identity.GetUserId();
-            bool isConfirm = await _basketService.ConfirmOrder(id);
-            bool clear = await _basketService.Clear(id);
-            if (!isConfirm || !clear)
+            try
             {
-                return HttpNotFound();
+                string id = User.Identity.GetUserId();
+                bool isConfirm = await _basketService.ConfirmOrder(id);
+                bool clear = await _basketService.Clear(id);
+                if (!isConfirm || !clear)
+                {
+                    return HttpNotFound();
+                }
+
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index", new { Message = ex.Message });
+            }
         }
 
         [HttpPost]

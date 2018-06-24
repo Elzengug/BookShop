@@ -53,6 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\BookOrderStatus.cs" />
+    <Compile Include="Enums\ManageMessage.cs" />
     <Compile Include="Models\Base\BaseEntity.cs" />
     <Compile Include="Models\Basket.cs" />
     <Compile Include="Models\Book.cs" />

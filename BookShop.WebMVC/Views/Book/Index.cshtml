@@ -4,24 +4,28 @@
 @{
     ViewBag.Title = "Index";
 }
-
+<p style="color: red">@ViewBag.StatusMessage</p>
 <h2>Книги в наличии</h2>
-@foreach (var book in Model)
-{<div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
-    <div class="card-header">@book.Name</div>
-    <div class="card-body">
-        <h4 class="card-title">Автор : @book.Author</h4>
-        <p class="card-text">
-            Количество : @book.Count <br />
-            Цена : @book.Price
-        </p>
+<div class="container">
+    <div class="row ">
+        @foreach (var book in Model)
+        {
+            <div class="col-4 card border-primary mb-3 px-1 mx-4 mb-3" style="max-width: 20rem;">
+                <div class="px-4">@book.Name</div>
+                <div class="px-2">
+                    <h4 class="px-3">Автор : @book.Author</h4>
+                    <p class="px-3">
+                        Количество : @book.Count <br />
+                        Цена : @book.Price
+                    </p>
+                </div>
+
+                <form method="post" class="px-4" action="~/Book/AddBookToBasket">
+                    <input required type="number" name="Count" id="userId" size="1">
+                    <input type="hidden" id="bookId" name="bookId" value="@book.Id">
+                    <input type="submit" class="btn btn-secondary" value="В корзину" class="submit" /><br>
+                </form>
+            </div>
+        }
     </div>
-
-    <form method="post" action="~/Book/AddBookToBasket">
-        <input type="number" name="Count" id="userId" size="1">
-        <input type="hidden" id="bookId" name="bookId" value="@book.Id">
-        <input type="submit" class="btn btn-secondary" value="В корзину" class="submit" /><br>
-
-    </form>
 </div>
-}

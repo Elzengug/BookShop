@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace BookShop.Data.Contexts
 {
     public class BookShopDbContext : DbContext, IDbContext
-    {   
+    {
 
         public const string ConnectionString =
             @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BookShopDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -16,21 +16,20 @@ namespace BookShop.Data.Contexts
         {
             Database.SetInitializer<BookShopDbContext>(new RoleInitializer());
         }
-        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
             modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
             modelBuilder.Entity<IdentityUserRole>();
-            
         }
 
         public static BookShopDbContext Create()
         {
             return new BookShopDbContext();
         }
-     
+
         public IDbSet<Book> Books { get; set; }
         public IDbSet<BookOrder> BookOrders { get; set; }
         public IDbSet<Basket> Baskets { get; set; }

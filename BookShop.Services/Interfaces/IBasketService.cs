@@ -9,5 +9,6 @@ namespace BookShop.Services.Interfaces
         Task<double> GetTotalCostAsync(string id);
         Task<bool> Clear(string id);
         Task<bool> ConfirmOrder(string id);
+        Task<Basket> AddAsync(Basket basket);
     }
 }

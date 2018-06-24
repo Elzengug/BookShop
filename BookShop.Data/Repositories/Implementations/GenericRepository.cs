@@ -62,7 +62,7 @@ namespace BookShop.Data.Repositories.Implementations
             return item;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity item)
+        public virtual async Task<TEntity> UpdateAsync(TEntity item)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));

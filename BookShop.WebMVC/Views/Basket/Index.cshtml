@@ -7,29 +7,36 @@
 }
 
 <h2>Корзина</h2>
-@foreach (var bookOrder in Model.BookOrders)
-{<table class="table table-hover">
+<p style="color: red">@ViewBag.StatusMessage</p>
+@if (Model.BookOrders.Count > 0)
+{
+    <table class="table table-hover table-striped ">
         <tr>
             <th scope="col">Автор</th>
             <th scope="col">Цена</th>
             <th scope="col">Количество</th>
+            <th scope="col"></th>
         </tr>
-        <tr class="table-primary">
-            <th>@bookOrder.Book.Author</th>
-            <td>@bookOrder.Book.Price</td>
-            <td>@bookOrder.Book.Count</td>
-            <td>
-                <form method="post" action="~/Basket/DeleteBookOrder">
-                    <input type="hidden" id="bookOrderId" name="bookOrderId" value="@bookOrder.Id">
-                    <input type="submit" class="btn btn-secondary" value="Удалить" class="submit" /><br>
-                </form>
-            </td>
-        </tr>
+        @foreach (var bookOrder in Model.BookOrders)
+        {
+
+            <tr>
+                <th>@bookOrder.Book.Author</th>
+                <td>@bookOrder.Book.Price</td>
+                <td>@bookOrder.Count</td>
+                <td>
+                    <form method="post" action="~/Basket/DeleteBookOrder">
+                        <input type="hidden" id="bookOrderId" name="bookOrderId" value="@bookOrder.Id">
+                        <input type="submit" class="btn btn-secondary" value="Удалить" class="submit" /><br>
+                    </form>
+                </td>
+            </tr>
+
+        }
     </table>
-}
-<p><strong>Общая стоимость покупки :</strong>@Model.TotalCost</p>
-@if (Model.BookOrders.Count > 0)
-{
+
+    <p><strong>Общая стоимость покупки :</strong>@Model.TotalCost</p>
+
     <form method="post" action="~/Basket/ConfirmOrder">
         <input type="submit" class="btn btn-secondary" value="Оформить заказ" class="submit" />
     </form>
@@ -37,5 +44,10 @@
         <input type="submit" class="btn btn-secondary" value="Очистить корзину" class="submit" />
     </form>
 }
+else
+{
+    <h3> Ваша корзина пуста</h3>
+}
+
 
 

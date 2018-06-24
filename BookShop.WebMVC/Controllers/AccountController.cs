@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BookShop.Core.Models;
 using BookShop.Core.Models.Authorization;
+using BookShop.Services.Interfaces;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -15,9 +17,11 @@ namespace BookShop.WebMVC.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private readonly IBasketService _basketService;
 
-        public AccountController()
+        public AccountController(IBasketService basketService)
         {
+            _basketService = basketService;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -153,8 +157,13 @@ namespace BookShop.WebMVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
+                    
                     await UserManager.AddToRoleAsync(user.Id, "User");
+                    Basket basket = new Basket
+                    {
+                        Id = user.Id
+                    };
+                    var addedBasket = await _basketService.AddAsync(basket);
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
